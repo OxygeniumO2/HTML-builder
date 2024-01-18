@@ -1,16 +1,15 @@
 const path = require('path');
 const fs = require('fs');
 
-let stream = new fs.ReadStream(path.join(__dirname, 'text.txt'), {
+let stream = fs.createReadStream(path.join(__dirname, 'text.txt'), {
   encoding: 'utf-8',
 });
-let arrData = [];
+let data = '';
 
-stream.on('readable', () => {
-  let data = stream.read();
-  arrData.push(data);
+stream.on('data', (chunk) => {
+  data += chunk;
 });
 
 stream.on('end', () => {
-  console.log(arrData.join(''));
+  console.log(data);
 });
