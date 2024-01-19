@@ -19,6 +19,12 @@ process.stdin.on('data', (data) => {
 });
 
 process.on('SIGINT', () => {
+  writeStream.end();
+  process.exit();
+});
+
+process.on('SIGTERM', () => {
+  writeStream.end();
   process.exit();
 });
 
