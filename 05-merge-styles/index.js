@@ -15,11 +15,8 @@ const { readdir } = require('fs').promises;
     if (path.extname(file) === '.css') {
       const filePath = path.join(folderToCopyPath, file);
       const readStreamFile = fs.createReadStream(filePath);
-      readStreamFile.pipe(bundleCssStream, { end: false });
-      readStreamFile.on('end', () => {
-        if (file === files[files.length - 1]) {
-          bundleCssStream.end();
-        }
+      readStreamFile.on('data', (chunk) => {
+        bundleCssStream.write(chunk);
       });
     }
   }
